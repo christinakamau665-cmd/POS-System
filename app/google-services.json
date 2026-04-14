@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "965704593879",
+    "project_id": "victory-club-69d49",
+    "storage_bucket": "victory-club-69d49.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965704593879:android:9baf70b0fe09d98ddb5b92",
+        "android_client_info": {
+          "package_name": "com.example.possystem"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtbH96Cr1_r5E5NEInagdDlnDC6WFQ7L8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
