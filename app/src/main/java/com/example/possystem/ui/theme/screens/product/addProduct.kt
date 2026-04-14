@@ -35,13 +35,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.possystem.data.ProductViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddProductScreen() {
+fun AddProductScreen(navController: NavController) {
 
     // --- State Variables ---
     var imageUri by remember { mutableStateOf<Uri?>(null) }
@@ -56,7 +61,8 @@ fun AddProductScreen() {
     ) { uri: Uri? ->
         imageUri = uri
     }
-
+    val productViewModel: ProductViewModel=viewModel()
+    val context= LocalContext.current
     Scaffold(
         topBar = {
             TopAppBar(
@@ -168,7 +174,15 @@ fun AddProductScreen() {
 
 
             Button(
-                onClick = {},
+                onClick = {productViewModel.uploadProduct(
+                    imageUri,
+                    product_name,
+                    price,
+                    quantity,
+                    description,
+                    context,
+                    navController
+                )},
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Save Product",)
@@ -182,5 +196,5 @@ fun AddProductScreen() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun AddProductScreenPreview() {
-    AddProductScreen()
+    AddProductScreen(rememberNavController())
 }
