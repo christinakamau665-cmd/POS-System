@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
@@ -48,21 +47,22 @@ import com.example.possystem.data.ProductViewModel
 @Composable
 fun AddProductScreen(navController: NavController) {
 
-    // --- State Variables ---
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     var product_name by remember { mutableStateOf("") }
     var price by remember { mutableStateOf("") }
     var quantity by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
-
+    var dateManufacture by remember { mutableStateOf("") }
+    var barcodeNumber by remember { mutableStateOf("") }
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         imageUri = uri
     }
-    val productViewModel: ProductViewModel=viewModel()
-    val context= LocalContext.current
+    val productViewModel: ProductViewModel = viewModel()
+    val context = LocalContext.current
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -86,7 +86,6 @@ fun AddProductScreen(navController: NavController) {
         ) {
 
             Spacer(modifier = Modifier.height(16.dp))
-
 
             Box(
                 modifier = Modifier
@@ -112,7 +111,6 @@ fun AddProductScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-
             Button(
                 onClick = { launcher.launch("image/*") },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -122,12 +120,57 @@ fun AddProductScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-
             OutlinedTextField(
                 value = product_name,
                 onValueChange = { product_name = it },
-                label = { Text("Product_name") },
-                placeholder = { Text("Enter product_name") },
+                label = { Text("Product Name") },
+                placeholder = { Text("Enter product name") },
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            OutlinedTextField(
+                value = price,
+                onValueChange = { price = it },
+                label = { Text("Price") },
+                placeholder = { Text("Enter price") },
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            OutlinedTextField(
+                value = quantity,
+                onValueChange = { quantity = it },
+                label = { Text("Quantity") },
+                placeholder = { Text("Enter quantity") },
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            OutlinedTextField(
+                value = description,
+                onValueChange = { description = it },
+                label = { Text("Description") },
+                placeholder = { Text("Enter product description") },
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = false,
+                maxLines = 6
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+
+            OutlinedTextField(
+                value = dateManufacture,
+                onValueChange = { dateManufacture = it },
+                label = { Text("Date Manufactured") },
+                placeholder = { Text("Enter date manufactured") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -136,56 +179,33 @@ fun AddProductScreen(navController: NavController) {
 
 
             OutlinedTextField(
-                value = price,
-                onValueChange = { price = it },
-                label = { Text("Price") },
-                placeholder = { Text("Enter price") },
+                value = barcodeNumber,
+                onValueChange = { barcodeNumber = it },
+                label = { Text("Barcode Number") },
+                placeholder = { Text("Enter barcode number") },
                 modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-
-            OutlinedTextField(
-                value = quantity,
-                onValueChange = { quantity = it },
-                label = { Text("Quantity") },
-                placeholder = { Text("Enter quantity ") },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-
-            OutlinedTextField(
-                value = description,
-                onValueChange = { description = it },
-                label = { Text("Description") },
-                placeholder = { Text("Enter product  description") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(120.dp),
-                maxLines = 6
+                singleLine = true
             )
 
             Spacer(modifier = Modifier.height(24.dp))
 
-
             Button(
-                onClick = {productViewModel.uploadProduct(
-                    imageUri,
-                    product_name,
-                    price,
-                    quantity,
-                    description,
-                    context,
-                    navController
-                )},
+                onClick = {
+                    productViewModel.uploadProduct(
+                        imageUri,
+                        product_name,
+                        price,
+                        quantity,
+                        description,
+                        dateManufacture,
+                        barcodeNumber,
+                        context,
+                        navController
+                    )
+                },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Save Product",)
+                Text("Save Product")
             }
 
             Spacer(modifier = Modifier.height(16.dp))

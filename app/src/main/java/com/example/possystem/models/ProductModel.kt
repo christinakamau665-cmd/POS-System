@@ -6,6 +6,8 @@ data class ProductModel(
     var price: String?=null,
     var quantity: String?=null,
     var description: String?=null,
+    var dateManufacture: String?=null,
+    var barcodeNumber: String?=null,
     var imageUrl: String?=null
 
 )
