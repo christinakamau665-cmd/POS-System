@@ -205,7 +205,7 @@ fun AddProductScreen(navController: NavController) {
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Save Product")
+                Text("Save Product", color = Color.Blue)
             }
 
             Spacer(modifier = Modifier.height(16.dp))

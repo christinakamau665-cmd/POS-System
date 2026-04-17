@@ -26,6 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.possystem.data.AuthViewModel
+import com.example.possystem.navigation.ROUTE_VIEW_PRODUCT
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -142,7 +143,9 @@ fun Dashboard(navController: NavController) {
 
                 actions.forEach { action ->
                     Card(
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(1f).clickable{
+                            navController.navigate(ROUTE_VIEW_PRODUCT)
+                        },
                         shape = RoundedCornerShape(16.dp),
                         colors = CardDefaults.cardColors(containerColor = Color.Blue),
                         elevation = CardDefaults.cardElevation(4.dp)

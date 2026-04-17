@@ -6,8 +6,10 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.example.possystem.models.ProductModel
 import com.example.possystem.navigation.ROUTE_DASHBOARD
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.getValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -79,4 +81,21 @@ class ProductViewModel : ViewModel() {
             .find(responseBody ?: "")?.groupValues?.get(1)
         return secureUrl ?: throw Exception("Failed to get image URL")
     }
-}
+
+    private var _products = mutableListOf<ProductModel>()
+    val products: List<ProductModel>  = _products
+    fun fetchProduct(context: Context) {
+        val ref = FirebaseDatabase.getInstance().getReference("Products")
+        ref.get().addOnSuccessListener { snapshot ->
+            _products.clear()
+            for (child in snapshot.children) {
+                val product = child.getValue(ProductModel::class.java)
+                product?.let {
+                    it.id = child.key
+                    _products.add(it) }
+            }
+        }.addOnFailureListener {
+            Toast.makeText(context, "Failed to load products ", Toast.LENGTH_LONG).show()
+        }
+    }
+     }
